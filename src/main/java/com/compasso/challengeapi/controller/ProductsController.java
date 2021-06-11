@@ -1,42 +1,47 @@
 package com.compasso.challengeapi.controller;
 
-import com.compasso.challengeapi.model.Produtc;
+import com.compasso.challengeapi.model.Produto;
+import com.compasso.challengeapi.repository.ProdutoRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/products")
+@RequiredArgsConstructor
 public class ProductsController {
 
-    @PostMapping("products")
-    private ResponseEntity criarUmNovoProduto(@RequestBody Produtc produtc){
+    private final ProdutoRepository produtoRepository;
+
+    @PostMapping
+    private ResponseEntity criarUmNovoProduto(@RequestBody Produto produto){
         return null;
     }
 
-    @PutMapping("products/")
-    private List<Produtc> criarUmNovoProduto(){
+    @PutMapping("/{id}")
+    private List<Produto> criarUmNovoProduto(){
         return null;
     }
 
-    @GetMapping("products/")
-    private Produtc buscaProdutoPorId(){
+    @GetMapping("/{id}")
+    private Produto buscaProdutoPorId(){
         return null;
     }
 
-    @GetMapping("products")
-    private List<Produtc> listarProdutos(){
-        return null;
+    @GetMapping
+    private List<Produto> listarProdutos(){
+        return produtoRepository.findAll();
     }
 
-    @GetMapping("products/search")
-    private List<Produtc> listarProdutosFiltrados(){
+    @GetMapping("/search")
+    private List<Produto> listarProdutosFiltrados(){
         return null;
     }
 
     @DeleteMapping("/products/")
-    private List<Produtc> deletarProduto(){
+    private List<Produto> deletarProduto(){
         return null;
     }
 }
