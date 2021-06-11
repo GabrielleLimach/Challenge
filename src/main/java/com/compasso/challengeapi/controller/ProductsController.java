@@ -1,9 +1,8 @@
 package com.compasso.challengeapi.controller;
 
-import com.compasso.challengeapi.model.Produtcs;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.compasso.challengeapi.model.Produtc;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -11,8 +10,33 @@ import java.util.List;
 @RequestMapping("/")
 public class ProductsController {
 
+    @PostMapping("products")
+    private ResponseEntity criarUmNovoProduto(@RequestBody Produtc produtc){
+        return null;
+    }
+
+    @PutMapping("products/")
+    private List<Produtc> criarUmNovoProduto(){
+        return null;
+    }
+
+    @GetMapping("products/")
+    private Produtc buscaProdutoPorId(){
+        return null;
+    }
+
     @GetMapping("products")
-    private List<Produtcs> recuperarTodos(){
+    private List<Produtc> listarProdutos(){
+        return null;
+    }
+
+    @GetMapping("products/search")
+    private List<Produtc> listarProdutosFiltrados(){
+        return null;
+    }
+
+    @DeleteMapping("/products/")
+    private List<Produtc> deletarProduto(){
         return null;
     }
 }

@@ -2,7 +2,7 @@ package com.compasso.challengeapi.model;
 
 import java.math.BigDecimal;
 
-public class Produtcs {
+public class Produtc {
 
     private Long id;
     private String name;
