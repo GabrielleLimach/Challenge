@@ -3,7 +3,6 @@ package com.compasso.challengeapi.controller;
 import com.compasso.challengeapi.model.Produto;
 import com.compasso.challengeapi.repository.ProdutoRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,32 +15,32 @@ public class ProductsController {
     private final ProdutoRepository produtoRepository;
 
     @PostMapping
-    private ResponseEntity criarUmNovoProduto(@RequestBody Produto produto){
-        return null;
+    public Produto criarUmNovoProduto(@RequestBody Produto produto) {
+        return produtoRepository.save(produto);
     }
 
     @PutMapping("/{id}")
-    private List<Produto> criarUmNovoProduto(){
+    public List<Produto> criarUmNovoProdutop() {
         return null;
     }
 
     @GetMapping("/{id}")
-    private Produto buscaProdutoPorId(){
+    public Produto buscaProdutoPorId() {
         return null;
     }
 
     @GetMapping
-    private List<Produto> listarProdutos(){
+    public List<Produto> listarProdutos() {
         return produtoRepository.findAll();
     }
 
     @GetMapping("/search")
-    private List<Produto> listarProdutosFiltrados(){
+    public List<Produto> listarProdutosFiltrados() {
         return null;
     }
 
     @DeleteMapping("/products/")
-    private List<Produto> deletarProduto(){
+    public List<Produto> deletarProduto() {
         return null;
     }
 }
