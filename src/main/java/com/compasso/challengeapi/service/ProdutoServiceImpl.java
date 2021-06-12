@@ -28,9 +28,9 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     @Override
     public Produto atualizar(String id, Produto produto) {
-            Produto novoProduto = produtoRepository.getById(id);
-            BeanUtils.copyProperties(produto,novoProduto, "id");
-            return produtoRepository.save(novoProduto);
+        Produto novoProduto = produtoRepository.getById(id);
+        BeanUtils.copyProperties(produto, novoProduto, "id");
+        return produtoRepository.save(novoProduto);
     }
 
     @Override
