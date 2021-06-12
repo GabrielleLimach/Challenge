@@ -41,7 +41,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     @Override
     public List<Produto> buscarTodosFilter(BigDecimal valorMin, BigDecimal valorMax, String q) {
-//        return produtoRepository.;
         return null;
+//        return produtoRepository.
     }
 }
