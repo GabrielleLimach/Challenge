@@ -5,7 +5,9 @@ import com.compasso.challengeapi.service.ProdutoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.util.List;
@@ -18,8 +20,12 @@ public class ProductsController {
     private final ProdutoService produtoService;
 
     @PostMapping
-    public ResponseEntity<Produto> criarUmNovoProduto(@RequestBody Produto produto) {
-        return ResponseEntity.created(URI.create(null)).body(produtoService.salvar(produto));
+    public ResponseEntity<Produto> criarUmNovoProduto(@RequestBody Produto produto, HttpServletResponse response) {
+        Produto produtoNovo = produtoService.salvar(produto);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("{id}").buildAndExpand(produtoNovo.getId()).toUri();
+        response.setHeader("Location", uri.toASCIIString());
+        return ResponseEntity.created(uri).body(produtoNovo);
     }
 
     @PutMapping("/{id}")
@@ -45,6 +51,7 @@ public class ProductsController {
     @DeleteMapping("/products/")
     public ResponseEntity deletarProduto(@RequestBody Produto produto) {
         produtoService.deletar(produto);
-        return ResponseEntity.created(URI.create(null));
+//        return ResponseEntity.created(URI.create(null));
+        return null;
     }
 }
