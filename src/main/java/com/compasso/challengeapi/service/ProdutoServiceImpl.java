@@ -3,6 +3,7 @@ package com.compasso.challengeapi.service;
 import com.compasso.challengeapi.model.Produto;
 import com.compasso.challengeapi.repository.ProdutoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -26,7 +27,9 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     @Override
     public Produto atualizar(String id, Produto produto) {
-        return produtoRepository.save(produto);
+        Produto novoProduto = produtoRepository.getById(id);
+        BeanUtils.copyProperties(produto,novoProduto, "id");
+        return produtoRepository.save(novoProduto);
     }
 
     @Override
