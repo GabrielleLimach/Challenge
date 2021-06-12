@@ -1,6 +1,6 @@
 package com.compasso.challengeapi.controller;
 
-import com.compasso.challengeapi.exceptions.ExceptionResponse;
+import com.compasso.challengeapi.model.enuns.ExceptionResponse;
 import com.compasso.challengeapi.model.Produto;
 import com.compasso.challengeapi.service.ProdutoService;
 import lombok.RequiredArgsConstructor;
@@ -30,37 +30,45 @@ public class ProductsController {
             response.setHeader("Location", uri.toASCIIString());
             return ResponseEntity.created(uri).body(produtoNovo);
         }catch (ResponseStatusException e) {
-            ExceptionResponse exceptionResponse = ExceptionResponse.builder().message("Error").status_code(HttpStatus.BAD_REQUEST.value()).build();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionResponse);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ExceptionResponse.POST);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Produto> atualizarProdutop(@PathVariable("id") String id, @RequestBody Produto produto) {
-        return ResponseEntity.ok().body(produtoService.atualizar(id, produto));
+    public ResponseEntity atualizarProdutop(@PathVariable("id") String id, @RequestBody Produto produto) {
+        try {
+            return ResponseEntity.ok().body(produtoService.atualizar(id, produto));
+        }catch (ResponseStatusException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ExceptionResponse.PUT);
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Produto> buscaProdutoPorId(@PathVariable("id") String id) {
-        return ResponseEntity.ok().body(produtoService.buscarPorId(id));
+    public ResponseEntity buscaProdutoPorId(@PathVariable("id") String id) {
+        try {
+            return ResponseEntity.ok().body(produtoService.buscarPorId(id));
+        }catch (ResponseStatusException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ExceptionResponse.GET);
+        }
     }
 
     @GetMapping
-    public ResponseEntity<List<Produto>> listarProdutos() {
-        return ResponseEntity.ok().body(produtoService.buscarTodos());
+    public ResponseEntity listarProdutos() {
+            return ResponseEntity.ok().body(produtoService.buscarTodos());
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<Produto>> listarProdutosFiltrados(@RequestParam(value = "valorMin", required = false) BigDecimal valorMin, @RequestParam(value = "valorMax", required = false) BigDecimal valorMax, @RequestParam String q) {
-//        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/search").buildAndExpand(produtoNovo.getId()).toUri();
-//        response.setHeader("Location", uri.toASCIIString());
-        return ResponseEntity.created(URI.create(null)).body(produtoService.buscarTodosFilter(valorMin, valorMax, q));
+    public List<Produto> listarProdutosFiltrados(@RequestParam(value = "min_price", required = false) BigDecimal valorMin, @RequestParam(value = "max_price", required = false) BigDecimal valorMax, @RequestParam String q) {
+        return produtoService.buscarTodosFilter(valorMin, valorMax, q);
     }
 
-    @DeleteMapping("/products/")
+    @DeleteMapping
     public ResponseEntity deletarProduto(@RequestBody Produto produto) {
-        produtoService.deletar(produto);
-//        return ResponseEntity.created(URI.create(null));
-        return null;
+        try {
+            produtoService.deletar(produto);
+            return ResponseEntity.ok().body(HttpStatus.OK);
+        }catch (ResponseStatusException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ExceptionResponse.DELETE);
+        }
     }
 }

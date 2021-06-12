@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -27,9 +28,9 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     @Override
     public Produto atualizar(String id, Produto produto) {
-        Produto novoProduto = produtoRepository.getById(id);
-        BeanUtils.copyProperties(produto,novoProduto, "id");
-        return produtoRepository.save(novoProduto);
+            Produto novoProduto = produtoRepository.getById(id);
+            BeanUtils.copyProperties(produto,novoProduto, "id");
+            return produtoRepository.save(novoProduto);
     }
 
     @Override
@@ -44,7 +45,9 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     @Override
     public List<Produto> buscarTodosFilter(BigDecimal valorMin, BigDecimal valorMax, String q) {
-        return null;
-//        return produtoRepository.
+        if (Objects.isNull(q))
+            return produtoRepository.findProdutoByPriceBetween(valorMin, valorMax);
+        else
+            return produtoRepository.findProdutoByNameOrAndDescription(q,q);
     }
 }
